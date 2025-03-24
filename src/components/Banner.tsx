@@ -1,15 +1,20 @@
 "use client"
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Banner():JSX.Element {
   const router = useRouter();
+  const { data:session } = useSession();
   return (
     <div className="w-[1500px] h-[720px]">
       <div className="fixed w-[1500px] h-[720px] top-0 left-0">
         <div className="relative h-[720px]">
           <div className="absolute w-[1500px] h-[720px] top-0 left-0 bg-[url(/header-with-image.svg)] bg-cover bg-[50%_50%]">
             <div className="relative w-[1500px] h-[719px] top-px left-0.5 bg-[url(/img/cover.jpg)] bg-cover bg-[50%_50%]">
-              <button className="all-[unset] box-border px-8 py-5 absolute top-[472px] left-[683px] bg-[#997e7e7a] inline-flex items-center gap-2 rounded-lg shadow-[0px_1px_2px_#0000000d]" onClick={()=>alert(window.innerWidth)}>
+              <button className="all-[unset] box-border px-8 py-5 absolute top-[472px] left-[683px] bg-[#997e7e7a] inline-flex items-center gap-2 rounded-lg shadow-[0px_1px_2px_#0000000d]" onClick={(e)=>{
+                e.stopPropagation;
+                router.push("/reserve")
+              }}>
                 <div className="mt-[-1.00px] text-2xl leading-9 relative w-fit font-serif font-medium text-white tracking-[0] whitespace-nowrap">
                   reserve
                 </div>
@@ -34,12 +39,26 @@ export default function Banner():JSX.Element {
               <div className="text-xl leading-[30px] relative w-fit [font-family:'Inter-Medium',Helvetica] font-medium text-white tracking-[0] whitespace-nowrap">
                 home
               </div>
-
-              <button className="all-[unset] box-border justify-center px-6 py-3.5 relative flex-[0_0_auto] border border-solid border-black hover:border-neutral-500 inline-flex items-center gap-2 rounded-lg shadow-[0px_1px_2px_#0000000d]">
-                <div className="relative w-fit mt-[-2.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-white text-xl tracking-[0] leading-[30px] whitespace-nowrap">
-                  sign-in
-                </div>
-              </button>
+              {
+                session? <button className="all-[unset] box-border justify-center px-6 py-3.5 relative flex-[0_0_auto] inline-flex items-center gap-2 rounded-lg shadow-[0px_1px_2px_#0000000d]" onClick={(e)=>{
+                  e.stopPropagation;
+                  router.push("/myreservation")
+                }}>
+                  <div className="relative w-fit mt-[-2.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-white text-xl tracking-[0] leading-[30px] whitespace-nowrap">
+                    {session.user?.name}
+                  </div>
+                </button> 
+                :
+                <button className="all-[unset] box-border justify-center px-6 py-3.5 relative flex-[0_0_auto] border border-solid border-black hover:border-neutral-500 inline-flex items-center gap-2 rounded-lg shadow-[0px_1px_2px_#0000000d]" onClick={(e)=>{
+                  e.stopPropagation;
+                  router.push("/api/auth/signin")
+                }}>
+                  <div className="relative w-fit mt-[-2.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-white text-xl tracking-[0] leading-[30px] whitespace-nowrap">
+                    sign-in
+                  </div>
+                </button>
+              }
+              
             </div>
 
             <div className="absolute h-[30px] top-[66px] left-20 [font-family:'Inter-Medium',Helvetica] font-medium text-white text-xl tracking-[0] leading-[30px] whitespace-nowrap">

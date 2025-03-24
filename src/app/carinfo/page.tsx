@@ -14,7 +14,7 @@ export default function CarInfoPage() {
     
     
             <div className="absolute w-[389px] h-[72px] top-[140px] left-[60px] font-serif text-black text-[64px] tracking-[0] leading-[96px] whitespace-nowrap">
-              select car
+              select a car
             </div>
     
             <TopMenu></TopMenu>
