@@ -1,5 +1,3 @@
-import { resolve } from "path"
-
 export default async function getCarproviders() {
 
     await new Promise((resolve)=>setTimeout(resolve, 2000))

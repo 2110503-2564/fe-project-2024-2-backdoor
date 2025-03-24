@@ -19,7 +19,7 @@ export default async function CarproviderDetailPage({params} : {params:{cid:stri
                 <div className="text-md mx-5 ">Telephone: {carproviderDetail.data.tel}</div>
                 
                 
-                <Link href={`/reservations?id=${params.cid}&model=${carproviderDetail.data.model}`}>
+                <Link href={`/reserve?id=${params.cid}&name=${carproviderDetail.data.name}`}>
                     <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
                     text-white shadow-sm"> 
                         Make Reservation

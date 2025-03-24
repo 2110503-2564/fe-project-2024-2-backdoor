@@ -1,116 +1,184 @@
-import React from "react";
-// import line2 from "./line-2.svg";
+// 'use client'
+// import React from "react";
+// import { TextField, Button } from "@mui/material";
+// import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import dayjs, { Dayjs } from "dayjs";
+// import { useSearchParams } from "next/navigation";
+// import { useState } from "react";
+// import { ReservationItem } from "@/interfaces";
+// import { useSession } from "next-auth/react";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+// import { getServerSession } from "next-auth";
+// import makeReservation from "@/libs/makeReservation";
+
+// export const Reserve = (): JSX.Element => {
+
+//     const urlParams = useSearchParams()
+//     const cid = urlParams.get('id')
+//     const name = urlParams.get('name')
+
+//     const [fname, setFname] = useState<string>("");
+//     const [lname, setLname] = useState<string>("");
+//     const [tel, setTel] = useState<string>("");
+//     const [carproviderID, setCarproviderID] = useState<string | null>(cid);
+//     const [carprovidername, setCarproviderName] = useState<string | null>(name);
+//     const [date, setDate] = useState<Dayjs | null>(null);
+//     const [returnDate, setReturnDate] = useState<Dayjs | null>(null);
+
+//     const {data: session} = useSession();
+//     const userId = session?.user?._id;
+//     // console.log(session?.user);
+//     const makeReserve = () => {
+//         if(name && date && returnDate && fname && lname && carprovidername && carproviderID){
+//             console.log('test');
+//             const item:ReservationItem= {
+//                 date: dayjs(date).format("YYYY/MM/DD"),
+//                 returnDate: dayjs(returnDate).format("YYYY/MM/DD"),
+//                 user: userid,
+//                 carprovider: carproviderID
+//             }
+//             makeReservation(item.date, item.returnDate, item.user, item.carprovider, session?.user?.token)
+//             // console.log('s');
+//         }
+//     }
+
+//     return (
+//         <div className="bg-white flex justify-center w-full min-h-screen p-6">
+//             <div className="bg-white w-full max-w-3xl p-6 shadow-lg rounded-lg">
+//                 <h1 className="text-4xl font-serif text-center mb-6">Reserve</h1>
+
+//                 <div className="space-y-4">
+//                     {/* First Name */}
+//                     <TextField fullWidth label="First Name" variant="outlined" value={fname} onChange={(e)=>setFname(e.target.value)}/>
+
+//                     {/* Last Name */}
+//                     <TextField fullWidth label="Last Name" variant="outlined" value={lname} onChange={(e)=>setLname(e.target.value)}/>
+
+//                     {/* Contact Number */}
+//                     <TextField fullWidth label="Contact Number" variant="outlined" value={tel} onChange={(e)=>setTel(e.target.value)}/>
+
+//                     {/* Date & Return Date */}
+//                     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//                         <DatePicker
+//                             label="Date"
+//                             value={date}
+//                             onChange={(newDate) => setDate(newDate)}
+//                         />
+//                         <DatePicker
+//                             label="Return Date"
+//                             value={returnDate}
+//                             onChange={(newDate) => setReturnDate(newDate)}
+//                         />
+//                     </LocalizationProvider>
+
+//                     {/* Select Car */}
+//                     <TextField fullWidth label="Select Carprovider" variant="outlined" 
+//                     value={carprovidername}/>
+
+//                     {/* Submit Button */}
+//                     <Button fullWidth variant="contained" color="primary" size="large" onClick={()=>(makeReserve)}>
+//                         Submit
+//                     </Button>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Reserve;
+'use client'
+import React, { useState, useEffect } from "react";
+import { TextField, Button } from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { ReservationItem } from "@/interfaces";
+import makeReservation from "@/libs/makeReservation";
 
 export const Reserve = (): JSX.Element => {
+    const urlParams = useSearchParams();
+    const cid = urlParams.get('id');
+    const name = urlParams.get('name');
+
+    const [fname, setFname] = useState<string>("");
+    const [lname, setLname] = useState<string>("");
+    const [tel, setTel] = useState<string>("");
+    const [carproviderID, setCarproviderID] = useState<string | null>(cid);
+    const [carprovidername, setCarproviderName] = useState<string | null>(name);
+    const [date, setDate] = useState<Dayjs | null>(null);
+    const [returnDate, setReturnDate] = useState<Dayjs | null>(null);
+
+    const { data: session } = useSession();
+    const userId = session?.user?._id;
+
+    // Log variables when they change
+    useEffect(() => {
+        console.log("First Name:", fname);
+        console.log("Last Name:", lname);
+        console.log("Contact Number:", tel);
+        console.log("Car Provider ID:", carproviderID);
+        console.log("Car Provider Name:", carprovidername);
+        console.log("Date:", date ? dayjs(date).format("YYYY/MM/DD") : null);
+        console.log("Return Date:", returnDate ? dayjs(returnDate).format("YYYY/MM/DD") : null);
+        console.log("User ID:", userId);
+    }, [fname, lname, tel, carproviderID, carprovidername, date, returnDate, userId]);
+
+    const makeReserve = () => {
+        if (name && date && returnDate && fname && lname && carprovidername && carproviderID) {
+            console.log('Submitting reservation...');
+            const item: ReservationItem = {
+                date:  dayjs(date).toISOString(),
+                returnDate: dayjs(returnDate).toISOString(),
+                user: userId,
+                carprovider: carproviderID
+            };
+            makeReservation(item.date, item.returnDate, item.user, item.carprovider, session?.user?.token);
+        }
+    };
+
     return (
-        <div className="bg-white flex flex-row justify-center w-full">
-            <div className="bg-white overflow-hidden w-[1440px] h-[1024px] relative">
-                <div className="absolute w-[428px] top-[115px] left-[506px] [font-family:’Imria_serif-Regular', Helvetica] font-normal text-black text-[64px] text-center tracking[0] leading-[normal]">
-                    Reserve
-                </div>
+        <div className="bg-white flex justify-center w-full min-h-screen p-6">
+            <div className="bg-white w-full max-w-3xl p-6 shadow-lg rounded-lg">
+                <h1 className="text-4xl font-serif text-center mb-6">Reserve</h1>
 
-                <div className="absolute w-[1530px] h-[82px] top-0 -left-8 bg-black">
-                    <div className="inline-flex items-center justify-end gap-[var(--variable-collection-spacing-m)] relative top-3 left-[1210px]">
-                        <div className="relative w-fit font-body-text font-[number:var(--body-text-font-weight)] text-white text-[length:var(--body-text-font-size)] tracking-[var(--body-text-letter-spacing)] leading-[var(--body-text-line-height)] whitespace-nowrap [font-style:var(--body-text-font-style)]">
-                            Home
-                        </div>
+                <div className="space-y-4">
+                    {/* First Name */}
+                    <TextField fullWidth label="First Name" variant="outlined" value={fname} onChange={(e) => setFname(e.target.value)} />
 
-                        <button className="all-[unset] box-border flex px-6 py-3.5 relative flex-[0_0_auto] border-2 border-solid border-black items-center justify-center gap-2 rounded-lg shadow-button-shadow">
-                            <div className="relative w-fit mt-[-2.00px] [font-family:’Inter-Medium’, Helvetica] font-medium text-white text-xl tracking-[0] leading-[30px] whitespace-nowrap">
-                                Sign-in
-                            </div>
-                        </button>
-                    </div>
-                </div>
+                    {/* Last Name */}
+                    <TextField fullWidth label="Last Name" variant="outlined" value={lname} onChange={(e) => setLname(e.target.value)} />
 
-                {/* <img className="absolute w-[1244px] h-[3px] top-[241px] left-0 object-cover" alt="Line" src={line2} /> */}
+                    {/* Contact Number */}
+                    <TextField fullWidth label="Contact Number" variant="outlined" value={tel} onChange={(e) => setTel(e.target.value)} />
 
-                <div className="absolute w-[173px] h-[33px] top-[219px] left-[1255px] [font-family:’Inter-Medium’, Helvetica] font-medium text-black tracking-[0] leading-[30px] whitespace-nowrap">
-                    your reservation
-                </div>
+                    {/* Date & Return Date */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            label="Date"
+                            value={date}
+                            onChange={(newDate) => setDate(newDate)}
+                        />
+                        <DatePicker
+                            label="Return Date"
+                            value={returnDate}
+                            onChange={(newNewDate) => setReturnDate(newNewDate)}
+                        />
+                    </LocalizationProvider>
 
-                <div className="absolute w-[626px] h-[610px] top-[308px] left-[407px]">
-                    <div className="flex flex-wrap w-[626px] items-start gap-[var(--variable-collection-spacing-SM)] absolute top-0 left-0">
-                        <div className="w-[295px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                First name
-                            </div>
+                    {/* Select Car */}
+                    <TextField fullWidth label="Select Car Provider" variant="outlined" value={carprovidername} />
 
-                            <div className="flex-1 grow flex items-start gap-2 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow">
-                                <div className="relative flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-[#828282] text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                    Jane
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-[297px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                Last name
-                            </div>
-
-                            <div className="flex-1 grow flex items-start gap-2 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow">
-                                <div className="relative flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-[#828282] text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                    Doh
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-[626px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                Contact Number
-                            </div>
-
-                            <div className="flex-1 grow flex items-start gap-2 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow">
-                                <div className="relative flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-[#828282] text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                    000-000-0000
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-[626px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                Date
-                            </div>
-
-                            <div className="flex-1 grow flex items-start gap-2 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow">
-                                <div className="relative flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-[#828282] text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                    00-00-0000
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-[626px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                Return date
-                            </div>
-
-                            <div className="flex-1 grow flex items-start gap-2 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow">
-                                <div className="relative flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-[#828282] text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                    00-00-0000
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="w-[626px] h-20 flex flex-col items-start gap-2 relative">
-                            <div className="relative self-stretch mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]">
-                                Select car
-                            </div>
-
-                            <input
-                                className="h-12 px-4 py-3 relative self-stretch w-full bg-white rounded-lg border border-solid border-[#dfdfdf] shadow-button-shadow flex-1 mt-[-1.00px] font-small-text font-[number:var(--small-text-font-weight)] text-black text-[length:var(--small-text-font-size)] tracking-[var(--small-text-letter-spacing)] leading-[var(--small-text-line-height)] [font-style:var(--small-text-font-style)]"
-                                placeholder="Enter car"
-                                type="string"
-                            />
-                        </div>
-                    </div>
-
-                    <button className="all-[unset] box-border flex w-[626px] px-8 py-4 absolute top-[548px]">
-                        <div>Submit</div>
-                    </button>
+                    {/* Submit Button */}
+                    <Button fullWidth variant="contained" color="primary" size="large" onClick={makeReserve}>
+                        Submit
+                    </Button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Reserve; 
+export default Reserve;
