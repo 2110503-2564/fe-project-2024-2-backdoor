@@ -1,12 +1,10 @@
 import TopMenu from "@/components/TopMenu"
-
+import Reserve from "@/components/ReservePage"
 export default function ReservePage() {
     return (
         <main>
             <TopMenu></TopMenu>
-            <div className="mt-[80px] bg-white text-black h-[623px] text-center">
-                Reserve
-            </div>
+            <Reserve></Reserve>
         </main>
     )
 }
