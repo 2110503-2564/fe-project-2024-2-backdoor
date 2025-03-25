@@ -19,12 +19,20 @@ export default function Banner(): JSX.Element {
         <p className="text-lg md:text-2xl font-serif mt-4">Start your journey with us</p>
 
         {/* Reserve Button */}
-        <button
+        {
+          session? <button
           className="mt-8 px-6 py-3 bg-opacity-50 bg-gray-700 hover:bg-gray-600 transition rounded-lg shadow-md text-xl"
           onClick={() => router.push("/reserve")}
-        >
-          Reserve
-        </button>
+          >
+            Reserve
+          </button>:
+          <button
+          className="mt-8 px-6 py-3 bg-opacity-50 bg-gray-700 hover:bg-gray-600 transition rounded-lg shadow-md text-xl"
+          onClick={() => router.push("/api/auth/signin")}
+          >
+            Reserve
+          </button>
+        }
       </div>
 
       {/* Navbar */}
