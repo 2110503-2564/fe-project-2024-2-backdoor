@@ -32,8 +32,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, onChange, onSubmi
     return (
         <form 
     onSubmit={onSubmit} 
-    className="max-w-md mx-auto bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
->
+    className="mt-24 max-w-md mx-auto bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">   
+    <h1 className="text-4xl font-serif text-center mb-6">Registeration Form</h1>
     <div className="mb-4">
         <label 
             htmlFor="userName" 

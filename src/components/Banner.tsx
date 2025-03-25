@@ -47,28 +47,37 @@ export default function Banner(): JSX.Element {
           </button>
 
           {session ? (
-            <>
+            <div>
               <button
-                className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow-md hover:bg-gray-200 transition"
+                className="px-6 m-2 py-3 bg-white text-gray-900 rounded-lg shadow-md hover:bg-gray-200 transition"
                 onClick={() => router.push("/myreservation")}
               >
                 {session.user?.name}
               </button>
 
               <button
-                className="px-6 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition"
+                className="px-6 m-2 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Sign Out
               </button>
-            </>
+            </div>
           ) : (
-            <button
-              className="px-6 py-3 border text-md border-white rounded-lg bg-white hover:text-white hover:bg-black transition"
-              onClick={() => router.push("/api/auth/signin")}
-            >
-              Sign In
-            </button>
+            <div>
+              <button
+                className="px-6 m-2 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition"
+                onClick={() => router.push("/api/auth/signin")}
+              >
+                Sign In
+              </button>
+
+              <button
+                className="px-6 m-2 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-black transition"
+                onClick={() => router.push("/api/auth/register")}
+              >
+                Register
+              </button>
+            </div>
           )}
         </div>
       </div>
