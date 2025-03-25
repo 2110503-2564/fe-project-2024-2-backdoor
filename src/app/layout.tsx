@@ -4,6 +4,7 @@ import "./globals.css";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth";
+import TopMenu from "@/components/TopMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider session={nextAuthSession}>
+          <TopMenu/>
           {children}
         </NextAuthProvider>
       </body>

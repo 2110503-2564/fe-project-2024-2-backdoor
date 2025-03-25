@@ -7,7 +7,7 @@ export default async function CarproviderDetailPage({params} : {params:{cid:stri
     const carproviderDetail = await getCarprovider(params.cid)
 
     return(
-        <main className="text-center p-5">
+        <main className="mt-24 text-center p-5">
             <h1 className="text-lg font-medium"> {carproviderDetail.data.name} </h1>
             <div className="flex flex-row my-5">
                 <Image src={carproviderDetail.data.picture} alt='Car Image' 

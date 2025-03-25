@@ -1,39 +1,57 @@
-"use client"
-import { useRouter } from "next/navigation"
+"use client";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function TopMenu() {
-    const router = useRouter();
-    return (
-        <div className="w-[1550px] h-[80px] top-0 bg-black fixed">
-          <div className="inline-flex items-center justify-end gap-[var(--variable-collection-spacing-m)] relative top-3 left-[1320px]">
-            <div className="relative w-fit font-body-text font-[number:var(--body-text-font-weight)] text-white">
-              <button onClick={
-                (e)=>{
-                    e.stopPropagation;
-                    router.push("/");
-                }
-              }>home</button>
-            </div>
+  const router = useRouter();
+  const { data: session } = useSession();
 
-            <button className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3.5 relative flex-[0_0_auto] border-2 border-solid border-black shadow-button-shadow ml-[20px]" onClick={(e)=>{
-                e.stopPropagation;
-                router.push("/api/auth/signin")
-            }}>
-              <div className="relative w-fit mt-[-2.00px] [font-family:'Inter-Medium',Helvetica] text-white tracking-[0] leading-[30px] whitespace-nowrap">
-                sign-in
-              </div>
-            </button>
+  return (
+    <div className="fixed top-0 w-full h-20 bg-black shadow-md flex items-center justify-between px-6">
+      {/* Left Side: Logo or Home Button */}
+      <button
+        className="text-white text-lg font-medium hover:text-gray-300 transition"
+        onClick={() => router.push("/")}
+      >
+        Home
+      </button>
 
-            <button className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3.5 relative flex-[0_0_auto] border-2 border-solid border-black shadow-button-shadow ml-[20px]" onClick={(e)=>{
-                e.stopPropagation;
-                router.push("/api/auth/register")
-            }}>
-              <div className="relative w-fit mt-[-2.00px] [font-family:'Inter-Medium',Helvetica] text-white tracking-[0] leading-[30px] whitespace-nowrap">
-                register
-              </div>
-            </button>
+      {/* Right Side: Auth Buttons */}
+      {session ? (
+        <div className="flex items-center space-x-4">
+          {/* User Name Button */}
+          <button
+            className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow-md hover:bg-gray-200 transition"
+            onClick={() => router.push("/myreservation")}
+          >
+            {session.user?.name}
+          </button>
 
-          </div>
+          {/* Sign Out Button */}
+          <button
+            className="px-6 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition"
+            onClick={() => signOut({ callbackUrl: "/" })}
+          >
+            Sign Out
+          </button>
         </div>
-    )
+      ) : (
+        <div className="flex space-x-4">
+          <button
+            className="px-6 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition"
+            onClick={() => router.push("/api/auth/signin")}
+          >
+            Sign In
+          </button>
+
+          <button
+            className="px-6 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition"
+            onClick={() => router.push("/api/auth/register")}
+          >
+            Register
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }

@@ -1,22 +1,32 @@
 import Link from "next/link";
-import CarCard from "@/components/CarCard"
+import CarCard from "@/components/CarCard";
 
-export default async function CarCatalog({carproviderJson} : {carproviderJson : Object}){
-    const carproviderJsonReady = await carproviderJson
-    return(
-        <>
-        Explore {carproviderJsonReady.count} models in our catalog
-        <div style={{margin:"20px", display:"flex", flexDirection:"row", 
-                flexWrap:"wrap", justifyContent:"space-around", alignContent:"space-around"}}>
-                {
-                    carproviderJsonReady.data.map((carItem : Object)=>(
-                        <Link href={`/carinfo/${carItem.id}`} className="w-1/5">
-                            <CarCard name={carItem.name} desc={carItem.description} imgSrc={carItem.picture}/>
-                        </Link>
-                    ))
-                }
+export default async function CarCatalog({ carproviderJson }: { carproviderJson: any }) {
+  const carproviderJsonReady = await carproviderJson;
 
-            </div>
-        </>
-    )
+  return (
+    <div className="container mx-auto px-4 py-10">
+      {/* Title */}
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+        Explore {carproviderJsonReady.count} Models in Our Catalog
+      </h2>
+
+      {/* Car Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {carproviderJsonReady.data.map((carItem: any) => (
+          <Link
+            key={carItem.id}
+            href={`/carinfo/${carItem.id}`}
+            className="transform hover:scale-105 transition-transform"
+          >
+            <CarCard
+              name={carItem.name}
+              desc={carItem.description}
+              imgSrc={carItem.picture}
+            />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 }

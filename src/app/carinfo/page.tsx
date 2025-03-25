@@ -1,5 +1,3 @@
-import CarCard from "@/components/CarCard"
-import TopMenu from "@/components/TopMenu";
 import { Suspense } from "react";
 import CarproviderCatalog from "@/components/CarproviderCatalog";
 import getCarproviders from "@/libs/getCarproviders";

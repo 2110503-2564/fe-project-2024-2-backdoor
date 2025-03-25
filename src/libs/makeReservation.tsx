@@ -1,9 +1,9 @@
 export default async function makeReservation (date:string, returnDate:string, userID:string, carproviderID:string, token:string) {
-    console.log(date);
-    console.log(returnDate);
-    console.log(userID);
-    console.log(carproviderID);
-    console.log(token);
+    // console.log(date);
+    // console.log(returnDate);
+    // console.log(userID);
+    // console.log(carproviderID);
+    // console.log(token);
     try {
         const response = await fetch(`http://localhost:5000/api/v1/carproviders/${carproviderID}/bookings`, {
             method: "POST",
