@@ -3,8 +3,8 @@ import CarproviderCatalog from "@/components/CarproviderCatalog";
 import getCarproviders from "@/libs/getCarproviders";
 import { LinearProgress } from "@mui/material";
 
-export default function CarInfoPage() {
-    const carProviders = getCarproviders()
+export default async function CarInfoPage() {
+    const carProviders = await getCarproviders()
     return (
       <div className="bg-slate-950 min-h-screen">
       <main>

@@ -38,9 +38,13 @@ export const Reserve = (): JSX.Element => {
     // }, [fname, lname, tel, carproviderID, carprovidername, date, returnDate, userId]);
 
     const makeReserve = () => {
-        if (name && date && returnDate && fname && lname && carprovidername && carproviderID) {
+        if (name && date && returnDate && fname && lname && carprovidername && carproviderID && userId) {
+            if (dayjs(returnDate).isBefore(dayjs(date))) {
+                alert("Error: Return date cannot be before the reservation date.");
+                return;
+            }
             console.log('Submitting reservation...');
-            const item: ReservationItem = {
+            const item = {
                 date:  dayjs(date).toISOString(),
                 returnDate: dayjs(returnDate).toISOString(),
                 user: userId,

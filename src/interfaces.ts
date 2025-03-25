@@ -1,8 +1,9 @@
 export interface ReservationItem{
+    _id: string
     date: string
     returnDate: string
     user: string
-    carprovider: string
+    carprovider: CarItem
 }
 
 export interface CarItem{

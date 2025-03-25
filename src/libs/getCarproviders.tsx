@@ -1,4 +1,6 @@
-export default async function getCarproviders() {
+import { CarJson } from "@/interfaces"
+
+export default async function getCarproviders():Promise<CarJson> {
 
     // await new Promise((resolve)=>setTimeout(resolve, 1000))
 

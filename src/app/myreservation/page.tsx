@@ -73,7 +73,9 @@ export default function MyReservationPage() {
                             <button onClick={(e)=>{
                                 // alert("delete reservation")
                                 e.stopPropagation;
-                                deleteReservations(reservation._id, token);
+                                if(token){
+                                    deleteReservations(reservation._id, token);
+                                }
                             }}>
                                 <div className="bg-red-500 mt-[10px] rounded-md px-[5px] py-[3px] hover:bg-red-700">
                                     Delete

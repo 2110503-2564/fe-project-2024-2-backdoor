@@ -21,7 +21,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, onChange, onSubmi
     useEffect(() => {
         if (success) {
             const redirectTimer = setTimeout(() => {
-                window.location.href = 'http://localhost:3000'; // Direct browser redirect
+                window.location.href = 'https://cedt-frontend-project-car.vercel.app/'; // Direct browser redirect
             }, 2000); // 2-second delay to show success message
 
             // Cleanup the timer to prevent memory leaks
