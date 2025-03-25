@@ -5,7 +5,7 @@ export default async function makeReservation (date:string, returnDate:string, u
     // console.log(carproviderID);
     // console.log(token);
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/carproviders/${carproviderID}/bookings`, {
+        const response = await fetch(`https://cedt-frontend-project-api.vercel.app/api/v1/carproviders/${carproviderID}/bookings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

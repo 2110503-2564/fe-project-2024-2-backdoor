@@ -1,6 +1,6 @@
 export default async function deleteReservations(id:string, token:string) {
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/bookings/${id}`, {
+        const response = await fetch(`https://cedt-frontend-project-api.vercel.app/api/v1/bookings/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`
