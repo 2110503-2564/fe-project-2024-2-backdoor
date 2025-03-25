@@ -56,7 +56,7 @@ export default function Banner(): JSX.Element {
               </button>
 
               <button
-                className="px-6 m-2 py-3 bg-red-600 text-white rounded-lg shadow-md hover:bg-red-700 transition"
+                className="px-6 m-2 py-3 border border-solid border-white text-white rounded-lg shadow-md hover:border-gray-500 transition"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Sign Out

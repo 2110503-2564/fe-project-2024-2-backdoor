@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { ReservationItem } from "@/interfaces";
 import makeReservation from "@/libs/makeReservation";
 
-export const Reserve = (): JSX.Element => {
+export default function Reserve(): JSX.Element {
     const urlParams = useSearchParams();
     const cid = urlParams.get('id');
     const name = urlParams.get('name');
@@ -47,6 +47,7 @@ export const Reserve = (): JSX.Element => {
                 carprovider: carproviderID
             };
             makeReservation(item.date, item.returnDate, item.user, item.carprovider, session?.user?.token);
+            alert("reservation completed")
         }
     };
 
@@ -91,5 +92,3 @@ export const Reserve = (): JSX.Element => {
         </div>
     );
 };
-
-export default Reserve;

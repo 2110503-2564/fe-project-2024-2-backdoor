@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { ReservationItem } from "@/interfaces";
 import { useSession } from "next-auth/react";
 import getReservations from "@/libs/getReservations";
+import deleteReservations from "@/libs/deleteReservation";
+import Link from "next/link";
 
 export default function MyReservationPage() {
     const [reservations, setReservations] = useState<ReservationItem[]>([]);
@@ -24,11 +26,16 @@ export default function MyReservationPage() {
     }, [token]);
 
     return (
+        <div className="bg-slate-950 min-h-screen mt-20">
         <main className="max-w-6xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-center mb-6">My Reservations</h1>
+            {
+                session?.user.role == "admin"? 
+                <h1 className="text-3xl font-bold text-center mb-6 font-serif">All Reservations</h1>:
+                <h1 className="text-3xl font-bold text-center mb-6 font-serif">My Reservations</h1>
+            }
 
             {reservations.length === 0 ? (
-                <p className="text-center text-gray-600">No reservations found.</p>
+                <p className="text-center text-gray-400 font-serif">No reservations found.</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {reservations.map((reservation) => (
@@ -55,10 +62,28 @@ export default function MyReservationPage() {
                             <p className="text-gray-600">
                                 <span className="font-medium">Return Date:</span> {new Date(reservation.returnDate).toLocaleDateString()}
                             </p>
+                            <Link href={`/edit?id=${reservation._id}`}>
+                                <button>
+                                    <div className="ml-[200px] border-solid border mt-[10px] mr-[10px] rounded-md text-black px-[5px] py-[3px] hover:border-black">
+                                      Edit
+                                    </div>
+                                </button>
+                            </Link>
+                            
+                            <button onClick={(e)=>{
+                                // alert("delete reservation")
+                                e.stopPropagation;
+                                deleteReservations(reservation._id, token);
+                            }}>
+                                <div className="bg-red-500 mt-[10px] rounded-md px-[5px] py-[3px] hover:bg-red-700">
+                                    Delete
+                                </div>
+                            </button>
                         </div>
                     ))}
                 </div>
             )}
         </main>
+        </div>
     );
 }

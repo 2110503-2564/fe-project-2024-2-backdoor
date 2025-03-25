@@ -6,15 +6,17 @@ import { LinearProgress } from "@mui/material";
 export default function CarInfoPage() {
     const carProviders = getCarproviders()
     return (
+      <div className="bg-slate-950 min-h-screen">
       <main>
         {/* <div className="absolute w-[389px] h-[72px] top-[140px] left-[60px] font-serif text-black text-[64px] tracking-[0] leading-[96px] whitespace-nowrap">
           select a carprovider
         </div> */}
         
-        <Suspense fallback={ <p>Loading ...<LinearProgress/></p> }>
+        <Suspense fallback={ <p className="mt-[200px] mx-[80px]">Loading ...<LinearProgress/></p> }>
               <CarproviderCatalog carproviderJson={carProviders}/>   
         </Suspense>
       </main>
+      </div>
 
         // <div className="bg-[#f0f0f0] flex flex-row justify-center w-full">
         //   <div className="bg-[#f0f0f0] overflow-hidden w-[1528px] h-[1024px] relative">
