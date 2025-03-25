@@ -16,3 +16,8 @@ export interface CarItem{
     booking: ReservationItem[]
     id: string
 }
+
+export interface CarJson{
+    count: number,
+    data: CarItem[]
+}

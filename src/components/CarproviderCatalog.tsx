@@ -1,8 +1,8 @@
 import Link from "next/link";
 import CarCard from "@/components/CarCard";
-import { CarItem } from "@/interfaces";
+import { CarJson, CarItem } from "@/interfaces";
 
-export default async function CarCatalog({ carproviderJson }: { carproviderJson: any }) {
+export default async function CarCatalog({ carproviderJson }: { carproviderJson: CarJson }) {
   const carproviderJsonReady = await carproviderJson;
 
   return (

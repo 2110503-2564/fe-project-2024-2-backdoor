@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { ReservationItem } from "@/interfaces";
 import makeReservation from "@/libs/makeReservation";
 
-export default function Reserve(): JSX.Element {
+export const Reserve = (): JSX.Element => {
     const urlParams = useSearchParams();
     const cid = urlParams.get('id');
     const name = urlParams.get('name');
@@ -92,3 +92,5 @@ export default function Reserve(): JSX.Element {
         </div>
     );
 };
+
+export default Reserve;
